@@ -26,10 +26,17 @@ __cleanup() {
   unset -f __load __cleanup
   tmux set-environment -gu NORD_TMUX_STATUS_TIME_FORMAT
   tmux set-environment -gu NORD_TMUX_STATUS_DATE_FORMAT
+  # Charlie's custom changes START
+  tmux set-environment -gu CHARLIE_TMUX_ARCH
+  # Charlie's custom changes END
 }
 
 __load() {
   tmux source-file "$_current_dir/$NORD_TMUX_COLOR_THEME_FILE"
+
+  # Charlie's custom changes START
+  tmux set-environment -g CHARLIE_TMUX_ARCH "$(uname -m)"
+  # Charlie's custom changes END
 
   local status_content=$(tmux show-option -gqv "$NORD_TMUX_STATUS_CONTENT_OPTION")
   local no_patched_font=$(tmux show-option -gqv "$NORD_TMUX_NO_PATCHED_FONT_OPTION")
